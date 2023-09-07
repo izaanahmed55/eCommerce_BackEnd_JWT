@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 require('colors');
 
-const { userSignUp } = require('./controller/User.controller')
+const userRoute = require('./routes/User.routes')
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
@@ -19,19 +19,23 @@ app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
 
-app.use("/", function (req, res) {
+const connectDB = async () => {
+    const conn = await mongoose.connect(CONNECTION_URL);
+    console.log('MongoDB Connected Succesfully'.blue);
+  };
+  
+  connectDB()
+    .then(app.listen(PORT, () => console.log(`Server Is Running on Port: ${PORT}`.blue)))
+    .catch((err) => console.log("Error: ".red , err));
+
+//ROUTES
+
+app.get('/', (req, res) => {
     res.send("Hey! I am doing fine. Thanks for checking up on me :)");
 });
 
-app.use('/user', userSignUp)
+app.use('/user' , userRoute)
 
-const connectDB = async () => {
-  const conn = await mongoose.connect(CONNECTION_URL);
-  console.log('MongoDB Connected Succesfully'.blue);
-};
 
-connectDB()
-  .then(app.listen(PORT, () => console.log(`Server Is Running on Port: ${PORT}`.blue)))
-  .catch((err) => console.log("Error: ".red , err));
 
 module.exports = app;
