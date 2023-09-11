@@ -26,6 +26,7 @@ const userSignUp = async (req, res, next) => {
 
             return next(error);
         }
+
     } catch (error) {
         return next(error);
     }
@@ -76,7 +77,7 @@ const userSignIn = async (req, res, next) => {
             httpOnly: true,
         });
 
-        return res.status(201).json({ user: user, auth: true });
+        return res.status(201).json({ user: user, auth: true, accessToken});
 
     } catch (error) {
         return next(error);
