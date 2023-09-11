@@ -85,7 +85,36 @@ const userSignIn = async (req, res, next) => {
 
 };
 
+const isLoggedIn = async (req, res, next) => {
+    try {
+        // Access Token Validation
+        const { accessToken } = req.cookies;
+
+        console.log("Access Token: ", req.cookies);
+
+        if (!accessToken) {
+            return res.json({auth: false, isLogin: false})
+        }
+
+        let _id;
+
+        try {
+            const decodedToken = verifyAccessToken(accessToken);
+            _id = decodedToken._id;
+            console.log(_id)
+            return res.json({auth: true, isLogin: true})
+        } catch (error) {
+            return next(error);
+        }
+
+
+    } catch (error) {
+        return next(error);
+    }
+};
+
 module.exports = {
     userSignUp, 
     userSignIn,
+    isLoggedIn,
 };

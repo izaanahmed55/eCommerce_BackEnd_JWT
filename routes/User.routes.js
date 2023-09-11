@@ -1,5 +1,5 @@
 const express = require('express')
-const { userSignUp, userSignIn} = require('../controller/User.controller')
+const { userSignUp, userSignIn, isLoggedIn} = require('../controller/User.controller')
 const { authenticate } = require('../middleware/authenticate')
 
 const router = express.Router()
@@ -9,5 +9,6 @@ router.post('/profile', authenticate, (req, res) => {
 })
 router.post('/signup', userSignUp)
 router.post('/signin', userSignIn)
+router.post('/isloggedin', isLoggedIn)
 
 module.exports = router;
