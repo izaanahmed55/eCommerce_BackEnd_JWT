@@ -11,18 +11,21 @@ const signRefreshToken = (payload, expiryTime) => {
 };
 
 const verifyAccessToken = (token) => {
-    return jwt.verify(token, key);
+    try {
+        const decoded = jwt.verify(token, key);
+        return decoded;
+    } catch (error) {
+        throw error;
+    }
 };
 const verifyRefreshToken = (token) => {
     try {
         const decoded = jwt.verify(token, key);
         return decoded;
     } catch (error) {
-        // Handle token verification error
         throw error;
     }
 };
-
 
 // Store token to DB
 

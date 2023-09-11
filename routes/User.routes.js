@@ -4,7 +4,7 @@ const { authenticate } = require('../middleware/authenticate')
 
 const router = express.Router()
 
-router.post('/dashboard', authenticate, (req, res) => {
+router.post('/profile', authenticate, (req, res) => {
     res.json(req.user)
 })
 router.post('/signup', userSignUp)

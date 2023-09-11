@@ -1,17 +1,17 @@
 const User = require("../model/User.model");
-const { verifyRefreshToken } = require("../services/jwt");
+const { verifyAccessToken } = require("../services/jwt");
 
 const authenticate = async (req, res, next) => {
     try {
-        // Refresh Token Validation
-        const { refreshToken } = req.cookies;
+        // Access Token Validation
+        const { accessToken } = req.cookies;
 
-        console.log("Refresh: ", req.cookies);
+        console.log("Access Token: ", req.cookies);
 
-        if (!refreshToken) {
+        if (!accessToken) {
             const error = {
                 status: 401,
-                message: "Unauthorized. ",
+                message: "Unauthorized.",
             };
 
             return next(error);
@@ -20,7 +20,7 @@ const authenticate = async (req, res, next) => {
         let _id;
 
         try {
-            const decodedToken = verifyRefreshToken(refreshToken);
+            const decodedToken = verifyAccessToken(accessToken);
             _id = decodedToken._id;
             console.log(_id)
         } catch (error) {
