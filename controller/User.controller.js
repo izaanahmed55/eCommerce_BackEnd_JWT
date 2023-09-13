@@ -1,5 +1,5 @@
 const User = require("../model/User.model");
-const { signAccessToken } = require("../services/jwt");
+const { signAccessToken, verifyAccessToken } = require("../services/jwt");
 
 const userSignUp = async (req, res, next) => {
     const { username, email, password} = req.body;
@@ -38,7 +38,7 @@ const userSignUp = async (req, res, next) => {
             password,
         });
 
-        const accessToken = signAccessToken({ _id: user._id }, "1m");
+        const accessToken = signAccessToken({ _id: user._id }, "10m");
 
         // send tokens in cookie
         res.cookie("accessToken", accessToken, {
@@ -68,7 +68,7 @@ const userSignIn = async (req, res, next) => {
             return next(error);
         }
 
-        const accessToken = signAccessToken({ _id: user._id }, "1m");
+        const accessToken = signAccessToken({ _id: user._id }, "10m");
 
         console.log('user: ', user)
 
@@ -102,6 +102,7 @@ const isLoggedIn = async (req, res, next) => {
             const decodedToken = verifyAccessToken(accessToken);
             _id = decodedToken._id;
             console.log(_id)
+            res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
             return res.json({auth: true, isLogin: true})
         } catch (error) {
             return next(error);
