@@ -73,8 +73,8 @@ const userSignIn = async (req, res, next) => {
     res.cookie('accessToken', accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      secure: true, // Set to true for HTTPS environments
-      sameSite: 'none', // Set to 'none' for cross-site cookies (requires secure)
+      secure: true,
+      sameSite: 'none', 
     });    
 
     console.log("accessToken set:", accessToken);
@@ -116,9 +116,13 @@ const isLoggedIn = async (req, res, next) => {
 
 const logOut = async (req, res, next) => {
   try {
+    // Clear the accessToken cookie
     res.clearCookie("accessToken", { maxAge: 0 });
-    const { accessToken } = req.cookies;
-    console.log("Logout Cookies: ", req.cookies, " 🔰 Access token : ", accessToken);
+
+    // Log that the cookie is cleared
+    console.log("AccessToken cookie cleared");
+
+    // Respond with a success message
     res.status(200).json({
       auth: false,
       isLogin: false,
@@ -128,6 +132,7 @@ const logOut = async (req, res, next) => {
     return next(error);
   }
 };
+
 
 module.exports = {
   userSignUp,
