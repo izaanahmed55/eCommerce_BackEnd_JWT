@@ -116,18 +116,15 @@ const isLoggedIn = async (req, res, next) => {
 
 const logOut = async (req, res, next) => {
   try {
-    // Clear the accessToken cookie
     res.clearCookie("accessToken", { maxAge: 0 });
-
-    // Log that the cookie is cleared
     console.log("AccessToken cookie cleared");
 
-    // Respond with a success message
     res.status(200).json({
       auth: false,
       isLogin: false,
       message: "Access token cookie deleted",
     });
+
   } catch (error) {
     return next(error);
   }
