@@ -70,10 +70,12 @@ const userSignIn = async (req, res, next) => {
 
     // console.log("user: ", user);
 
-    res.cookie("accessToken", accessToken, {
+    res.cookie('accessToken', accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-    });
+      secure: true, // Set to true for HTTPS environments
+      sameSite: 'none', // Set to 'none' for cross-site cookies (requires secure)
+    });    
 
     console.log("accessToken set:", accessToken);
 
