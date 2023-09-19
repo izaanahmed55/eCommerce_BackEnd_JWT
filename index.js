@@ -14,10 +14,11 @@ const CONNECTION_URL = process.env.CONNECTION_URL;
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(cors({
-    origin: 'ecommerce-iak.netlify.app',
+// Configure CORS with your specific origin and credentials option
+const corsOptions = {
+    origin: 'https://ecommerce-iak.netlify.app',
     credentials: true,
-  }));
+};
 
 app.use(cors(corsOptions));
 
@@ -30,7 +31,7 @@ app.use(bodyParser.json());
 
 const connectDB = async () => {
     const conn = await mongoose.connect(CONNECTION_URL);
-    console.log("MongoDB Connected Succesfully".blue);
+    console.log("MongoDB Connected Successfully".blue);
 };
 
 connectDB()
@@ -41,7 +42,7 @@ connectDB()
     )
     .catch((err) => console.log("Error: ".red, err));
 
-//ROUTES
+// ROUTES
 
 app.get("/", (req, res) => {
     res.send("Hey! I am doing fine. Thanks for checking up on me :)");
