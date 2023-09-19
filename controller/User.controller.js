@@ -112,6 +112,8 @@ const isLoggedIn = async (req, res, next) => {
     return next(error);
   }
 };
+
+
 const logOut = async (req, res, next) => {
   try {
     res.clearCookie("accessToken", { maxAge: 0 });

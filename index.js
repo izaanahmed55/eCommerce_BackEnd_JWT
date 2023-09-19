@@ -15,9 +15,11 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors({
-    // origin: 'http://localhost:5173',
+    origin: 'ecommerce-iak.netlify.app',
     credentials: true,
   }));
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
