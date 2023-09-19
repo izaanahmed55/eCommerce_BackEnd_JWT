@@ -18,8 +18,6 @@ const PORT = process.env.PORT;
 const corsOptions = {
     origin: 'https://ecommerce-iak.netlify.app',
     credentials: true,
-    methods: 'GET,HEAD,PUT,POST,DELETE', // Allowed HTTP methods
-    optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
